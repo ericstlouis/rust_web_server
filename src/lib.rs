@@ -28,7 +28,7 @@ impl ThreadPool {
         let receiver = Arc::new(Mutex::new(receiver));
 
         //Make a vec with the capcicty of size
-        ///this is where the threads/workers are suppose to go
+        //this is where the threads/workers are suppose to go
         let mut Workers = Vec::with_capacity(size);
 
         //creating and pushing the worker thread into Workers Vec 
@@ -71,10 +71,11 @@ impl Worker {
     //this is a constructor for the worker
     //it takes in the id of the worker and the receiver of the threadpool
     //the receiver is a mutex that is used to send jobs to the worker
+    //mutex means that only one thread can access the receiver at a time
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<job>>>) -> Worker {
         //Since this a new function and it will be called owce
         //we need execute the code in a new thread
-        //to do this  we made let job a closure that will loop even if new is not called
+        //to do this we made "job" a closure that will loop even if new is not called
         //the worker will keep looping and executing the job during the lifetime of the threadpool even tho threadpool won't be
         // called again
         let thread = thread::spawn(move || loop {
